@@ -8,25 +8,15 @@ if (GMP_INCLUDE_DIRS AND GMP_LIBRARIES)
         set(GMP_FIND_QUIETLY TRUE)
 endif (GMP_INCLUDE_DIRS AND GMP_LIBRARIES)
 
+if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+	triwild_download_gmp_win()
+	SET(GMP_WINDOWS_PATH ${THIRD_PARTY_DIR}/gmp)
+	find_path(GMP_BINARY_DIRS NAMES gmp.dll PATHS $ENV{GMP_BIN} ${GMP_WINDOWS_PATH}/bin/x64)
+endif()
 
-
-#if(WIN32)
-#	if(CYGWIN)
-#		triwild_download_gmp_cygwin()
-	#elseif(MINGW)
-#		triwild_download_gmp_mingw()
-	#else()
-#		triwild_download_gmp_vc()
-	#endif()
-
-	#SET(GMP_WINDOWS_PATH ${THIRD_PARTY_DIR}/gmp)
-#endif()
-
-
-find_path(GMP_INCLUDE_DIRS NAMES gmp.h PATHS $ENV{GMP_INC} ${GMP_WINDOWS_PATH})
-find_library(GMP_LIBRARIES NAMES gmp libgmp PATHS $ENV{GMP_LIB} ${GMP_WINDOWS_PATH})
-find_library(GMPXX_LIBRARIES NAMES gmpxx libgmpxx PATHS $ENV{GMP_LIB} ${GMP_WINDOWS_PATH})
-#MESSAGE(STATUS "GMP libs: " ${GMP_LIBRARIES} " " ${GMPXX_LIBRARIES} )
+find_path(GMP_INCLUDE_DIRS NAMES gmp.h PATHS $ENV{GMP_INC} ${GMP_WINDOWS_PATH}/include)
+find_library(GMP_LIBRARIES NAMES gmp libgmp PATHS $ENV{GMP_LIB} ${GMP_WINDOWS_PATH}/lib/x64)
+find_library(GMPXX_LIBRARIES NAMES gmpxx libgmpxx PATHS $ENV{GMP_LIB} ${GMP_WINDOWS_PATH}/lib/x64)
 
 
 include(FindPackageHandleStandardArgs)

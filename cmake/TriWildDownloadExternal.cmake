@@ -65,3 +65,10 @@ function(triwild_download_json)
         GIT_TAG        0901d33bf6e7dfe6f70fd9d142c8f5c6695c6c5b
     )
 endfunction()
+
+## GMP
+function(triwild_download_gmp_win)
+    triwild_download_project(gmp
+        URL            https://github.com/ShiftMediaProject/gmp/releases/download/6.2.1-4/libgmp_6.2.1-4_msvc17.zip
+    )
+endfunction()
